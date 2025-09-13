@@ -1,0 +1,141 @@
+{
+  "name": "YouTube Posting (public template)",
+  "flow": [
+    {
+      "id": 10,
+      "module": "openai-gpt-3:CreateCompletion",
+      "version": 1,
+      "parameters": {
+        "__IMTCONN__": "{{PLACEHOLDER_CONN_OPENAI}}"
+      },
+      "mapper": {
+        "model": "chatgpt-4o-latest",
+        "top_p": "1",
+        "select": "chat",
+        "messages": [
+          {
+            "role": "system",
+            "content": "Récupère la date d'aujourd'hui et récupère le maximum d'articles du jour uniquement en ligne. Date: {{formatDate(now; \"YYYY-MM-DD\")}}. Vérifie la véracité des faits.\n\nle json demandé : {\"script\":\"...\",\"title\":\"...\",\"description\":\"...\",\"tags\":\"[\\\"urgent\\\", \\\"client\\\"]\"} (exemple)\n\nTu es \"Mister Plavon\", créateur finance FR pour des shorts YouTube. Style ULTRA EXPRESSIF vulgaire, PROACTIF, HARDCORE antiwoke et drôle positif sans emoji.\nContraintes:\n- Début EXACT: \"Salut bande d'opportunistes, c'est Mister Plavon !!\"\n- Un vrai conseil choc marquant compact très très court, mots marquants violents SANS PONCTUATION PHRASE COURTE -> 80 caractères grand maximum\n- Thèmes : ACTUALITÉ EN FRANCE aujourd'hui et MEILLEURE OPPORTUNITÉ DU MOMENT (business, investissement à la Michael Burry, Fintech ou IA, bon plan actuel, profiter, opportunité de vie, choix de vie, formation à suivre, sport bien-être, fiscalité-patrimoine mariage, classes d'actifs financiers).\n- S'il y a des chiffres, écris-les en toutes lettres.\n- Sortie STRICTEMENT en JSON, SANS AUCUN TEXTE HORS JSON et sans chiffres\n\n- La \"description\" DOIT se terminer par 6 à 10 hashtags FR pertinents (avec #, séparés par des espaces).\n- \"script\" ≤ 150 caractères maximum ;\n\"title\" putaclic avec des émojis ≤ 95 caractères ; \"description\" ≤ 500 caractères (hashtags inclus) plus longue, détaillée et bien expliquée ; \"tags\" le maximum possible, tendances et pertinents."
+          }
+        ],
+        "max_tokens": "2048",
+        "temperature": "0.9",
+        "n_completions": "1",
+        "response_format": "json_object",
+        "parseJSONResponse": true
+      },
+      "metadata": {
+        "designer": { "x": 0, "y": 0 }
+      }
+    },
+    {
+      "id": 8,
+      "module": "joggai:TalkingAvatar",
+      "version": 1,
+      "parameters": {
+        "__IMTCONN__": "{{PLACEHOLDER_CONN_JOGGAI}}"
+      },
+      "mapper": {
+        "script": "{{10.result.script}}",
+        "voice_id": "tb_a94bd3e9f3d140b19f881618fee4d845",
+        "avatar_id": "1208",
+        "audioSource": "script",
+        "avatar_type": 0,
+        "screen_style": 1,
+        "additionalOptions": "hide"
+      },
+      "metadata": {
+        "designer": { "x": 300, "y": 0 }
+      }
+    },
+    {
+      "id": 2,
+      "module": "util:FunctionSleep",
+      "version": 1,
+      "parameters": {},
+      "mapper": { "duration": "30" },
+      "metadata": {
+        "designer": { "x": 600, "y": 0 }
+      }
+    },
+    {
+      "id": 3,
+      "module": "joggai:GetGeneratedVideo",
+      "version": 1,
+      "parameters": {
+        "__IMTCONN__": "{{PLACEHOLDER_CONN_JOGGAI}}"
+      },
+      "mapper": {
+        "project_id": "{{8.data.project_id}}"
+      },
+      "metadata": {
+        "designer": { "x": 900, "y": 0 }
+      }
+    },
+    {
+      "id": 12,
+      "module": "util:FunctionSleep",
+      "version": 1,
+      "parameters": {},
+      "mapper": { "duration": "15" },
+      "metadata": {
+        "designer": { "x": 1200, "y": 0 }
+      }
+    },
+    {
+      "id": 15,
+      "module": "http:ActionGetFile",
+      "version": 3,
+      "parameters": {
+        "handleErrors": false
+      },
+      "mapper": {
+        "url": "{{3.data.video_url}}",
+        "method": "get",
+        "serializeUrl": false,
+        "shareCookies": false
+      },
+      "metadata": {
+        "designer": { "x": 1500, "y": 0 }
+      }
+    },
+    {
+      "id": 4,
+      "module": "youtube:uploadVideo",
+      "version": 4,
+      "parameters": {
+        "__IMTCONN__": "{{PLACEHOLDER_CONN_YOUTUBE}}"
+      },
+      "mapper": {
+        "data": "{{15.data}}",
+        "title": "{{10.result.title}}",
+        "fileName": "{{ if(contains(15.fileName; \".mp4\"); 15.fileName; formatDate(now; \"YYYYMMDD-HHmm\") & \"-mister-plavon.mp4\") }}",
+        "categoryId": "25",
+        "description": "{{10.result.description}}",
+        "privacyStatus": "public",
+        "notifySubscribers": true,
+        "containsSyntheticMedia": true,
+        "selfDeclaredMadeForKids": false,
+        "tags": "{{ split(replace(replace(10.result.tags; \",\"; \" \"); \"#\"; \"\"); \" \") }}"
+      },
+      "metadata": {
+        "designer": { "x": 1800, "y": 0 }
+      }
+    }
+  ],
+  "metadata": {
+    "instant": false,
+    "version": 1,
+    "scenario": {
+      "roundtrips": 1,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "autoCommitTriggerLast": true,
+      "sequential": false,
+      "slots": null
+    },
+    "designer": { "orphans": [] },
+    "zone": "eu2.make.com",
+    "notes": []
+  }
+}

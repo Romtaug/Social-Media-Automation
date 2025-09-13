@@ -1,0 +1,152 @@
+{
+  "name": "LinkedIn publisher (public template)",
+  "flow": [
+    {
+      "id": 1,
+      "module": "openai-gpt-3:CreateCompletion",
+      "version": 1,
+      "parameters": {
+        "__IMTCONN__": "{{PLACEHOLDER_CONN_OPENAI}}"
+      },
+      "mapper": {
+        "model": "gpt-4o",
+        "top_p": "1",
+        "select": "chat",
+        "messages": [
+          {
+            "role": "system",
+            "content": "Le JSON demandé : {\"post\":\"...\",\"image_prompt\":\"...\"}\n\nFORMAT DE RÉPONSE FINAL STRICT :\n{\n  \"post\": \"Texte final LinkedIn en format français absolument complet prêt à être publié. Aucun astérisque (*), aucun gras, aucun mot entouré de **, aucun symbole Markdown. Les paragraphes doivent être clairs, séparés par des sauts de ligne, avec de beaux émojis. Les hashtags doivent être valides au format #Exemple.\",\n  \"image_prompt\": \"Prompt pour générer une image virale et professionnelle en format carré, basée sur le contenu du post. L'image ne doit contenir aucun texte, aucun chiffre, uniquement de vrais logos d'entreprises existants si mentionnés.\"\n}\n\nRAPPEL :\n- Fais de beaux paragraphes en français avec des sauts de ligne et de beaux émojis\n- Le texte doit être complet et propre pour la publication\n- N’utilise jamais de texte en gras, titres, puces Markdown.\n- Les hashtags doivent être écrits au format LinkedIn : #Exemple, jamais \"hashtag#Exemple\".\n- Le texte doit être directement publiable sur LinkedIn, sans correction nécessaire.\n\nIMPORTANT :\nNE DIS PAS QUE TU TIRES UN THÈME AU HASARD. SUPPRIME LES LIENS S'ILS NE SONT PAS RÉELS.\nSUPPRIME LES TITRES et rédige bien proprement, relis-toi plusieurs fois. SUPPRIME ÉGALEMENT LES TEXTES CLIQUABLES !! SI TU LISTES DES ÉLÉMENTS/ÉTAPES/FAITS UTILISE DIRECTEMENT LES ÉMOJIS : 1️⃣ 2️⃣ 3️⃣ 4️⃣ 5️⃣ ou 🔹 🔸 ✅ avec des sauts de ligne.\n\nRÔLE :\nTu es le meilleur expert ingénieur FinTech francophone, opportuniste capitaliste, proactif, pragmatique, libertarien extrême, N°1 créateur de contenu LinkedIn, hardcore visionnaire no-bullshit et vulgarisation. Vérifie que le post est absolument parfait, structuré, complet, bien expliqué et détaillé ; explique tous les termes pour débutants. Vérifie avant d’écrire que tout est parfait.\n\nPROCÉDURE À SUIVRE À CHAQUE APPEL :\n1️⃣ Sélection aléatoire du thème\n- Tire un nombre au hasard entre [1-30] puis sélectionne le thème associé (liste de 1 à 30 ci-dessous)…\n- 1 Futur des entreprises, ingénieurs, nouveaux métiers\n- 2 Données Différents Métiers (Ingénieur Data/Analyste/BI/Scientifique, etc.)\n- 3 Tuto et découverte d’un logiciel ou d'une librairie data, IA, automatisation avancée\n- 4 Évolution de carrière, conseils pour devenir les meilleurs ingénieurs\n- 5 Crypto (BTC, ETH, Web3, halving, DAO, DeFi, blockchain) ou avenir de la blockchain\n- 6 PropTech (crowdfunding vs scpi, tokenisation de bien, parcelles métaverse etc...)\n- 7 Start-up, Fintech, actions/titres financiers prometteurs pour maximiser rendement et ratio de sharpe, explique bien leur activité (analyse technique et fondamentale)\n- 8 Présentation d’une start-up ultra-innovante ou d'une Fintech et de ses activités\n- 9 Cours techniques complet (Library Python ou SQL ou Power BI, Query Automate ou ML, IA ou API ou R ou mathématiques financières de marché ou agent IA ou théorie économiques)\n- 10 Explication du fonctionnement d'un produit financier complexe ou simple\n- 11 Revenu passif, maximiser profit et ratio de sharpe, bien diversifier, indépendance financière, hacks financiers, fiscalité, inflation, prêt avantageux, minimiser les impôts\n- 12 IA qui simplifie la vie, le travail ou les voyages etc.\n- 13 Résumé de livre, éducation financière (dev perso, finance)\n- 14 Meilleures plateformes ou courtiers banques en ligne ou licornes/entreprises françaises à suivre ou meilleures méthodes de placement et explique bien les activités\n- 15 Cours d’Histoire et prévision du futur (Tech, Finance, Banque, BCE, Algo, Informatique, Mathématiques, IA, Monnaie etc.)\n- 16 Utilisation de Data, IA, algo pour une forte actualité du moment\n- 17 Comment investir dans un bien locatif rentable (cashflow, locataire, travaux, fiscalité, levier, obtenir un prêt avantageux, interdiction DPE etc..)\n- 18 Bot de trading, chatbot, chatbot pour data, tout type de bot\n- 19 Une nouvelle technologie d’actualité ultra-puissante\n- 20 Bon plan financier actuel et choix de carrières pour maximiser son salaire\n- 21 Philosophie stoïcisme, mère dane adinkra, Philosophie économie et financière\n- 22 Les titres financiers à absolument détenir dans son portefeuille pea ou cto pour diversifier au maximum (analyse complète technique et fondamentale)\n- 23 Nouvelles règlementations financières/immobilières/crypto/AMF\n- 24 Sujet actuel (immobilier ou bourse ou crypto ou data)\n- 25 Fintech de crowdfunding immobilier La Première Brique : fonctionnement, nouveautés, pourquoi c'est mieux que ses concurrents\n- 26 Formation pointue (blockchain, ia, data, placement, fiscalité immobilier, automatisation, résumés de livres, types d'IA et futur) + ressources/exercices/applications ; liens réels seulement.\n- 27 Idée de business révolutionnaire/scalable : stack, roadmap, comment encaisser dès cette semaine (ou plus tard) + vidéos si besoin\n- 28 Défi technique utile (scraping, IA, API, BI, SQL, RPA...) + améliorations max ; pousse à publier sur GitHub avec rapport clair\n- 29 Recommandations film/docu/série Data/Finance/Immobilier/Business/Dev perso + résumé + ce qu’on en tire\n- 30 Résumé de la dernière vidéo de moneyradar ou moneyradar crypto\n\n2️⃣ Rédaction du post LinkedIn\n- Le post doit être actuel (2025) ; récupère la date ici : https://www.dateaujourdhui.com/ {{formatDate(now; \"YYYY-MM-DD\")}}\n- Fais des recherches web récentes et réutilise les infos vérifiées uniquement.\n- Style ultra-smart, clair pour débutants, conversationnel/inspirant/storytelling ; accroche percutante ; ajoute stats réelles, comparaisons, top5 ; impact et pourquoi agir maintenant ; conclusion marquante + question ouverte ; hashtags optimisés ; liens réels seulement.\n\n3️⃣ Prompt de l'image\n- Prompt pour image LinkedIn pro, **carré**, **sans aucun texte ni chiffres**, logos réels autorisés si mentionnés."
+          }
+        ],
+        "max_tokens": "15000",
+        "temperature": "1",
+        "n_completions": "1",
+        "response_format": "json_object",
+        "parseJSONResponse": true
+      },
+      "metadata": {
+        "designer": { "x": 0, "y": 0, "name": "Génération de contenu" }
+      }
+    },
+    {
+      "id": 7,
+      "module": "util:FunctionSleep",
+      "version": 1,
+      "parameters": {},
+      "mapper": { "duration": "10" },
+      "metadata": {
+        "designer": { "x": 300, "y": 0 }
+      }
+    },
+    {
+      "id": 6,
+      "module": "regexp:Replace",
+      "version": 1,
+      "parameters": {},
+      "mapper": {
+        "text": "{{1.result.post}}",
+        "value": "",
+        "global": true,
+        "pattern": "[*`_>#]+",
+        "multiline": false,
+        "sensitive": true,
+        "singleline": false
+      },
+      "metadata": {
+        "designer": { "x": 600, "y": 0 }
+      }
+    },
+    {
+      "id": 3,
+      "module": "openai-gpt-3:GenerateImage",
+      "version": 1,
+      "parameters": {
+        "__IMTCONN__": "{{PLACEHOLDER_CONN_OPENAI_IMAGE}}"
+      },
+      "mapper": {
+        "size": "1024x1024",
+        "model": "dall-e-3",
+        "style": "vivid",
+        "prompt": "{{1.result.image_prompt}}",
+        "quality": "standard",
+        "response_format": "imageFile"
+      },
+      "metadata": {
+        "designer": { "x": 900, "y": 0, "name": "Génération de l'image" }
+      },
+      "interface": [
+        { "name": "created", "type": "date", "label": "Created" },
+        {
+          "name": "data",
+          "spec": [
+            { "name": "fileName", "type": "text", "label": "File Name", "semantic": "file:name" },
+            { "name": "fileData", "type": "buffer", "label": "File Data", "semantic": "file:data" },
+            { "name": "revised_prompt", "type": "text", "label": "Revised Prompt" }
+          ],
+          "type": "array",
+          "label": "Data"
+        },
+        { "name": "resImgName", "type": "text", "label": "Response Image Name", "semantic": "file:name" },
+        { "name": "resImgData", "type": "buffer", "label": "Response Image Data", "semantic": "file:data" }
+      ]
+    },
+    {
+      "id": 8,
+      "module": "util:FunctionSleep",
+      "version": 1,
+      "parameters": {},
+      "mapper": { "duration": "10" },
+      "metadata": {
+        "designer": { "x": 1200, "y": 0 }
+      }
+    },
+    {
+      "id": 4,
+      "module": "linkedin:ShareImage",
+      "version": 2,
+      "parameters": {
+        "__IMTCONN__": "{{PLACEHOLDER_CONN_LINKEDIN}}"
+      },
+      "mapper": {
+        "data": "{{3.resImgData}}",
+        "content": "{{6.text}}",
+        "fileName": "{{3.resImgName}}",
+        "visibility": "PUBLIC",
+        "feedDistribution": "MAIN_FEED",
+        "isReshareDisabledByAuthor": false
+      },
+      "metadata": {
+        "designer": { "x": 1469, "y": -9 }
+      }
+    },
+    {
+      "id": 9,
+      "module": "util:FunctionSleep",
+      "version": 1,
+      "parameters": {},
+      "mapper": { "duration": "15" },
+      "metadata": {
+        "designer": { "x": 1769, "y": -9 }
+      }
+    }
+  ],
+  "metadata": {
+    "instant": false,
+    "version": 1,
+    "scenario": {
+      "roundtrips": 1,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "autoCommitTriggerLast": true,
+      "sequential": false,
+      "slots": null,
+      "confidential": false,
+      "dataloss": false,
+      "dlq": false,
+      "freshVariables": false
+    },
+    "designer": { "orphans": [] },
+    "zone": "eu2.make.com",
+    "notes": []
+  }
+}
