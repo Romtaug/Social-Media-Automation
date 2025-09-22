@@ -1,152 +1,1243 @@
 {
-  "name": "LinkedIn publisher (public template)",
-  "flow": [
-    {
-      "id": 1,
-      "module": "openai-gpt-3:CreateCompletion",
-      "version": 1,
-      "parameters": {
-        "__IMTCONN__": "{{PLACEHOLDER_CONN_OPENAI}}"
-      },
-      "mapper": {
-        "model": "gpt-4o",
-        "top_p": "1",
-        "select": "chat",
-        "messages": [
-          {
-            "role": "system",
-            "content": "Le JSON demandé : {\"post\":\"...\",\"image_prompt\":\"...\"}\n\nFORMAT DE RÉPONSE FINAL STRICT :\n{\n  \"post\": \"Texte final LinkedIn en format français absolument complet prêt à être publié. Aucun astérisque (*), aucun gras, aucun mot entouré de **, aucun symbole Markdown. Les paragraphes doivent être clairs, séparés par des sauts de ligne, avec de beaux émojis. Les hashtags doivent être valides au format #Exemple.\",\n  \"image_prompt\": \"Prompt pour générer une image virale et professionnelle en format carré, basée sur le contenu du post. L'image ne doit contenir aucun texte, aucun chiffre, uniquement de vrais logos d'entreprises existants si mentionnés.\"\n}\n\nRAPPEL :\n- Fais de beaux paragraphes en français avec des sauts de ligne et de beaux émojis\n- Le texte doit être complet et propre pour la publication\n- N’utilise jamais de texte en gras, titres, puces Markdown.\n- Les hashtags doivent être écrits au format LinkedIn : #Exemple, jamais \"hashtag#Exemple\".\n- Le texte doit être directement publiable sur LinkedIn, sans correction nécessaire.\n\nIMPORTANT :\nNE DIS PAS QUE TU TIRES UN THÈME AU HASARD. SUPPRIME LES LIENS S'ILS NE SONT PAS RÉELS.\nSUPPRIME LES TITRES et rédige bien proprement, relis-toi plusieurs fois. SUPPRIME ÉGALEMENT LES TEXTES CLIQUABLES !! SI TU LISTES DES ÉLÉMENTS/ÉTAPES/FAITS UTILISE DIRECTEMENT LES ÉMOJIS : 1️⃣ 2️⃣ 3️⃣ 4️⃣ 5️⃣ ou 🔹 🔸 ✅ avec des sauts de ligne.\n\nRÔLE :\nTu es le meilleur expert ingénieur FinTech francophone, opportuniste capitaliste, proactif, pragmatique, libertarien extrême, N°1 créateur de contenu LinkedIn, hardcore visionnaire no-bullshit et vulgarisation. Vérifie que le post est absolument parfait, structuré, complet, bien expliqué et détaillé ; explique tous les termes pour débutants. Vérifie avant d’écrire que tout est parfait.\n\nPROCÉDURE À SUIVRE À CHAQUE APPEL :\n1️⃣ Sélection aléatoire du thème\n- Tire un nombre au hasard entre [1-30] puis sélectionne le thème associé (liste de 1 à 30 ci-dessous)…\n- 1 Futur des entreprises, ingénieurs, nouveaux métiers\n- 2 Données Différents Métiers (Ingénieur Data/Analyste/BI/Scientifique, etc.)\n- 3 Tuto et découverte d’un logiciel ou d'une librairie data, IA, automatisation avancée\n- 4 Évolution de carrière, conseils pour devenir les meilleurs ingénieurs\n- 5 Crypto (BTC, ETH, Web3, halving, DAO, DeFi, blockchain) ou avenir de la blockchain\n- 6 PropTech (crowdfunding vs scpi, tokenisation de bien, parcelles métaverse etc...)\n- 7 Start-up, Fintech, actions/titres financiers prometteurs pour maximiser rendement et ratio de sharpe, explique bien leur activité (analyse technique et fondamentale)\n- 8 Présentation d’une start-up ultra-innovante ou d'une Fintech et de ses activités\n- 9 Cours techniques complet (Library Python ou SQL ou Power BI, Query Automate ou ML, IA ou API ou R ou mathématiques financières de marché ou agent IA ou théorie économiques)\n- 10 Explication du fonctionnement d'un produit financier complexe ou simple\n- 11 Revenu passif, maximiser profit et ratio de sharpe, bien diversifier, indépendance financière, hacks financiers, fiscalité, inflation, prêt avantageux, minimiser les impôts\n- 12 IA qui simplifie la vie, le travail ou les voyages etc.\n- 13 Résumé de livre, éducation financière (dev perso, finance)\n- 14 Meilleures plateformes ou courtiers banques en ligne ou licornes/entreprises françaises à suivre ou meilleures méthodes de placement et explique bien les activités\n- 15 Cours d’Histoire et prévision du futur (Tech, Finance, Banque, BCE, Algo, Informatique, Mathématiques, IA, Monnaie etc.)\n- 16 Utilisation de Data, IA, algo pour une forte actualité du moment\n- 17 Comment investir dans un bien locatif rentable (cashflow, locataire, travaux, fiscalité, levier, obtenir un prêt avantageux, interdiction DPE etc..)\n- 18 Bot de trading, chatbot, chatbot pour data, tout type de bot\n- 19 Une nouvelle technologie d’actualité ultra-puissante\n- 20 Bon plan financier actuel et choix de carrières pour maximiser son salaire\n- 21 Philosophie stoïcisme, mère dane adinkra, Philosophie économie et financière\n- 22 Les titres financiers à absolument détenir dans son portefeuille pea ou cto pour diversifier au maximum (analyse complète technique et fondamentale)\n- 23 Nouvelles règlementations financières/immobilières/crypto/AMF\n- 24 Sujet actuel (immobilier ou bourse ou crypto ou data)\n- 25 Fintech de crowdfunding immobilier La Première Brique : fonctionnement, nouveautés, pourquoi c'est mieux que ses concurrents\n- 26 Formation pointue (blockchain, ia, data, placement, fiscalité immobilier, automatisation, résumés de livres, types d'IA et futur) + ressources/exercices/applications ; liens réels seulement.\n- 27 Idée de business révolutionnaire/scalable : stack, roadmap, comment encaisser dès cette semaine (ou plus tard) + vidéos si besoin\n- 28 Défi technique utile (scraping, IA, API, BI, SQL, RPA...) + améliorations max ; pousse à publier sur GitHub avec rapport clair\n- 29 Recommandations film/docu/série Data/Finance/Immobilier/Business/Dev perso + résumé + ce qu’on en tire\n- 30 Résumé de la dernière vidéo de moneyradar ou moneyradar crypto\n\n2️⃣ Rédaction du post LinkedIn\n- Le post doit être actuel (2025) ; récupère la date ici : https://www.dateaujourdhui.com/ {{formatDate(now; \"YYYY-MM-DD\")}}\n- Fais des recherches web récentes et réutilise les infos vérifiées uniquement.\n- Style ultra-smart, clair pour débutants, conversationnel/inspirant/storytelling ; accroche percutante ; ajoute stats réelles, comparaisons, top5 ; impact et pourquoi agir maintenant ; conclusion marquante + question ouverte ; hashtags optimisés ; liens réels seulement.\n\n3️⃣ Prompt de l'image\n- Prompt pour image LinkedIn pro, **carré**, **sans aucun texte ni chiffres**, logos réels autorisés si mentionnés."
-          }
-        ],
-        "max_tokens": "15000",
-        "temperature": "1",
-        "n_completions": "1",
-        "response_format": "json_object",
-        "parseJSONResponse": true
-      },
-      "metadata": {
-        "designer": { "x": 0, "y": 0, "name": "Génération de contenu" }
-      }
-    },
-    {
-      "id": 7,
-      "module": "util:FunctionSleep",
-      "version": 1,
-      "parameters": {},
-      "mapper": { "duration": "10" },
-      "metadata": {
-        "designer": { "x": 300, "y": 0 }
-      }
-    },
-    {
-      "id": 6,
-      "module": "regexp:Replace",
-      "version": 1,
-      "parameters": {},
-      "mapper": {
-        "text": "{{1.result.post}}",
-        "value": "",
-        "global": true,
-        "pattern": "[*`_>#]+",
-        "multiline": false,
-        "sensitive": true,
-        "singleline": false
-      },
-      "metadata": {
-        "designer": { "x": 600, "y": 0 }
-      }
-    },
-    {
-      "id": 3,
-      "module": "openai-gpt-3:GenerateImage",
-      "version": 1,
-      "parameters": {
-        "__IMTCONN__": "{{PLACEHOLDER_CONN_OPENAI_IMAGE}}"
-      },
-      "mapper": {
-        "size": "1024x1024",
-        "model": "dall-e-3",
-        "style": "vivid",
-        "prompt": "{{1.result.image_prompt}}",
-        "quality": "standard",
-        "response_format": "imageFile"
-      },
-      "metadata": {
-        "designer": { "x": 900, "y": 0, "name": "Génération de l'image" }
-      },
-      "interface": [
-        { "name": "created", "type": "date", "label": "Created" },
+    "name": "LinkedIn - Publisher",
+    "flow": [
         {
-          "name": "data",
-          "spec": [
-            { "name": "fileName", "type": "text", "label": "File Name", "semantic": "file:name" },
-            { "name": "fileData", "type": "buffer", "label": "File Data", "semantic": "file:data" },
-            { "name": "revised_prompt", "type": "text", "label": "Revised Prompt" }
-          ],
-          "type": "array",
-          "label": "Data"
+            "id": 1,
+            "module": "openai-gpt-3:CreateCompletion",
+            "version": 1,
+            "parameters": {
+                "__IMTCONN__": 10073045
+            },
+            "mapper": {
+                "model": "gpt-4o",
+                "top_p": "1",
+                "select": "chat",
+                "messages": [
+                    {
+                        "role": "system",
+                        "content": "Le JSON demandé : {\"post\":\"...\",\"image_prompt\":\"...\"}\n\nFORMAT DE RÉPONSE FINAL STRICT :\r\n{\r\n  \"post\": \"Texte final LinkedIn en format fraçais absolument complet prêt à être publié. Aucun astérisque (*), aucun gras, aucun mot entouré de **, aucun symbole Markdown. Les paragraphes doivent être clairs, séparés par des sauts de ligne, avec de beaux émojis. Les hashtags doivent être valides au format #Exemple.\",\r\n  \"image_prompt\": \"Prompt pour générer une image virale et professionnelle en format carré, basée sur le contenu du post. L'image ne doit contenir aucun texte, aucun chiffre, uniquement de vrais logos d'entreprises existants si mentionnés.\"\r\n}\n\nRAPPEL :\n- Fais de beaux paragraphes en français avec des sautres de lignes avec de beux émojis\n- Le texte doit être complet et propre pour la publication\n- N’utilise jamais de texte en gras, titres, puces Markdown.\r\n- Les hashtags doivent être écrits au format LinkedIn : #Exemple, jamais \"hashtag#Exemple\".\r\n- Le texte doit être directement publiable sur LinkedIn, sans correction nécessaire.\r\n\nIMPORTANT :\nNE DIS PAS QUE TU TIRES UN THÈME AU HASARD. SUPPRIME LES LIENS S'IL NE SONT PAS REELS.\nSUPPRIME LES TITRES et rédige bien proprement relis toi  plusieurs fois SUPPRIME EGALEMENT LES TEXTE CLIQUABLE !! DANS LE CAS OU SI TU LISTES DES éLéMENTS DES éTAPES OU DES FAITS UTILISES DIRCETEMENT LES éMOJIS : 1️⃣ 2️⃣ 3️⃣ 4️⃣ 5️⃣ ou 🔹 🔸 ✅ en sautant bien des lignes\n\nRÔLE :\r\nTu es le meilleur expert ingénieur FinTech ultra-smart francophone, opportuniste capitaliste, proactif, pragmatique, libertarien extrême, N°1 créateur de contenu LinkedIn  hardcore visionnaire no bullshit et vilgarisation. Vérifie bien que le post est absolument parfait, structuré, complet, bien expliqué et détaillé ; explique absolument tous les termes pour les débutants. Vérifie avant d’écrire que tout est absolument parfait\r\n\r\nPROCÉDURE À SUIVRE À CHAQUE APPEL :\r\n1️⃣ Sélection aléatoire du thème\r\n- Tire un nombre absolument au hasard via python entre [1-30] (inclus) puis sélectionne le thème associé au chiffre tiré :\r\n\r\n- 1 Futur des entreprises, ingénieurs, nouveaux métiers\r\n- 2 Données Différents Métiers (Ingénieur Data/Analyste/BI/Scientifique, etc.)\r\n- 3 Tuto et découverte d’un logiciel ou d'une librairie data, IA, automatisation avancée\r\n- 4 Évolution de carrière, conseils pour devenir les meilleurs ingénieurs\r\n- 5 Crypto (BTC, ETH, Web3, halving, DAO, DeFi, blockchain) ou avenir de la blockchain\r\n- 6 PropTech (crowdfunding vs scpi, tokenisation de bien, parcelles métaverse etc...)\r\n- 7 Start-up, Fintech, actions/titres financiers prometteurs pour maximiser rendement et ratio de sharpe, explique bien leur activité (analyse technique et fondamentale)\r\n- 8 Présentation d’une start-up ultra-innovante ou d'une Fintech et de ses activités\r\n- 9 Cours techniques complet (Library Python ou SQL ou Power BI, Query Automate ou ML, IA ou API ou R ou mathématiques financières de marché ou agent IA ou théorie économiques)\r\n- 10 Explication du fonctionnement d'un produit financier complexe ou simple\r\n- 11 Revenu passif, maximiser profit et ratio de sharpe, bien diversifier, indépendance financière, hacks financiers, fiscalité, inflation, prêt avantageux, minimiser les impôts \r\n- 12 IA qui simplifie la vie, le travail ou les voyages etc.\r\n- 13 Résumé de livre, éducation financière (dev perso, finance)\r\n- 14 Meilleures plateformes ou courtiers banques en lignes ou licornes/entreprise françaises à suivre ou meilleurs méthodes de placement et explique bien les activités\r\n- 15 Cours d’Histoire et prévision du futur (Tech, Finance, Banque, BCE, Algo, Informatique, Mathématiques, IA, Monnaie etc.)\r\n- 16 Utilisation de Data, IA, algo pour une forte actualité du moment\r\n- 17 Comment investir dans un bien locatif rentable (cashflow, locataire, travaux, fiscalité, levier, obtenir un prêt avantageux, interdiction DPE etc..)\r\n- 18 Bot de trading, chatbot, chatbot pou data, tout type de bot\r\n- 19 Une nouvelle technologie d’actualité ultra-puissante\r\n- 20 bon plan financier actuellement et choix de carrières pour maximiser son salaire\r\n- 21 Philosophie stoïcisme, mère dane adinkra, Philosophie économie et financière\r\n- 22 les titres financiers à absolument détenir dans son portefeuille pea ou cto pour diversifier ses placements au maximum fais analyse complète (technique et fondamentale)\n- 23 Les nouvelles règlementation financière ou immobilière ou sur les cryptomonnaies ou AMF\n- 24 Un sujet soit immobilier soit bourse soit crypto soit data actuel\n- 25 Explication du système de la fintech de crowdfunding immobilier La Première Brique et ses nouveautés et pourquoi c'est mieux que ses concurrents et la meilleure plateforme\n- 26 Formation sur un sujet nouveau et pointu parmis un choix, visionnaire et utile aujourd’hui avec ressource, exercice et application directe (blockchain,ia,data,placement,fiscalité immobilier,automatisation,résumés de livres, différents types d'IA et futur), tu peux aussi conseiller le lien de coursera, de nouveaux sujets ou des résumés de livres incroyables et propose vidéos si besoin.\n- 27 Crée une idée de business révolutionnaire ou scalable à creuser, agressive et rentable. Donne-moi la stack, la roadmap, et comment encaisser dès cette semaine ou plus tard et propose vidéos si besoin.\n- 28 File un défi technique très utile (scraping, IA, API, BI, SQL, RPA...) ou corrige-moi, propose le maximum d’améliorations et pousse-moi à publier un projet propre sur GitHub et à faire le rapport seulement quand il t’auras affirmé que tout est fini pour bien expliquer la technique, le goal et bien vendre le projet et propose vidéos si besoin\n- 29 Recommadations de film/documentaire/série Data/Finance/Immobilier/Business/Dev perso à absolument voir en le résument et ce qu'on peu en tirer\n- 30 Résumé de la dernière vidéo de moneyradar ou moneyradar crypto\r\n\r\n2️⃣ Rédaction du post LinkedIn  long viral, complet, absolument ultra-pertinent, positif, clair, pro détaillé et parfait à partir des récents recherche web et d'articles. Les informations doivent être absolument véridique.\n- Le post doit forcément etre actuel (2025) formément récupère la avec : https://www.dateaujourdhui.com/ {{formatDate(now; \"YYYY-MM-DD\")}}\r\n\n- Fais le maximum de recherches web les plus récents et d’articles que tu vas réutiliser dans le post\r\n- ça doit être ultra-smart, bien expliqué meme pour les débutants, efficace, structuré, ça doit pas ressembler à gpt, le plus fluide naturel, humain le plus réel possible stp. \r\n- Vérifie avant d’écrire que tout est absolument parfait propre ready à être publié dans un français compréhensible\r\n- Accroche percutante et intrigante dès la première phrase.\r\n- Ajoute des stats réels marquantes, comparaisons chiffres clés, tableaux, classements (données réelles vérifiées uniquement très très bien) à partir des articles ou un Top5\r\n- Impact : explique comment cette tendance change la donne pour les individus ou entreprises.\r\n- Pourquoi agir aujourd'hui pour demain : opportunité, transformation\r\n- Style conversationnel, expressif, métaphorique, inspirant, accessible mains instructif, avec storytelling très émotionnel.\r\n- Mets le maximum d’émojis, fais le meilleur contenu possible\r\n- Conclusion très marquante, question très ouverte et incitante pour engager ou dilemme clivant le but est que les gens aient envie de répondre et de se mettre en valeur sur LinkedIn.\r\n- Inclut tous les meilleurs hashtags pour la viralité et, si pertinent, des liens vers plateformes ou formations (lien réel vérifie uniquement très très bien).\r\n- Ton pro et technique mais accessible pour tout le monde, enthousiaste, visionnaire, explique bien complet détaillé pour tout le monde\r\n- Explique absolument tous les termes importants pour les débutants\n- Vérifies que tout ce que tu dis est véridique et vérifiable sur internet.\r\n\r\n3️⃣ Rédaction du prompt de l'image\n- Fais le prompt pour générer une image simple LinkedIn pro absolument virale et marquante en format carré partir de ce post LinkedIn. \n- Supprime de l'image tout les textes, les nombres et chiffres de l'image, vérifie qu'il n'y en a pas et que tu as bien précisé cela dans le prompt"
+                    }
+                ],
+                "max_tokens": "15000",
+                "temperature": "1",
+                "n_completions": "1",
+                "response_format": "json_object",
+                "parseJSONResponse": true
+            },
+            "metadata": {
+                "designer": {
+                    "x": 0,
+                    "y": 0,
+                    "name": "Génération de contenu"
+                },
+                "restore": {
+                    "expect": {
+                        "stop": {
+                            "mode": "chose"
+                        },
+                        "model": {
+                            "mode": "chose",
+                            "label": "gpt-4o (system)"
+                        },
+                        "select": {
+                            "label": "Create a Chat Completion (GPT and o1 models)"
+                        },
+                        "messages": {
+                            "mode": "chose",
+                            "items": [
+                                {
+                                    "role": {
+                                        "mode": "chose",
+                                        "label": "Developer / System"
+                                    }
+                                }
+                            ]
+                        },
+                        "logit_bias": {
+                            "mode": "chose"
+                        },
+                        "tool_choice": {
+                            "mode": "chose",
+                            "label": "Empty"
+                        },
+                        "response_format": {
+                            "mode": "chose",
+                            "label": "JSON Object"
+                        },
+                        "parseJSONResponse": {
+                            "mode": "chose"
+                        },
+                        "additionalParameters": {
+                            "mode": "chose"
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "openai-gpt-3"
+                            },
+                            "label": "My OpenAI connection"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:openai-gpt-3",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "select",
+                        "type": "select",
+                        "label": "Select Method",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "chat",
+                                "prompt"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "temperature",
+                        "type": "number",
+                        "label": "Temperature",
+                        "validate": {
+                            "max": 2,
+                            "min": 0
+                        }
+                    },
+                    {
+                        "name": "top_p",
+                        "type": "number",
+                        "label": "Top P",
+                        "validate": {
+                            "max": 1,
+                            "min": 0
+                        }
+                    },
+                    {
+                        "name": "n_completions",
+                        "type": "number",
+                        "label": "Number"
+                    },
+                    {
+                        "name": "frequency_penalty",
+                        "type": "number",
+                        "label": "Frequency Penalty",
+                        "validate": {
+                            "max": 2,
+                            "min": -2
+                        }
+                    },
+                    {
+                        "name": "presence_penalty",
+                        "type": "number",
+                        "label": "Presence Penalty",
+                        "validate": {
+                            "max": 2,
+                            "min": -2
+                        }
+                    },
+                    {
+                        "name": "logit_bias",
+                        "spec": {
+                            "name": "value",
+                            "spec": [
+                                {
+                                    "name": "token",
+                                    "type": "text",
+                                    "label": "Token ID",
+                                    "required": true
+                                },
+                                {
+                                    "name": "probability",
+                                    "type": "number",
+                                    "label": "Probability",
+                                    "required": true,
+                                    "validate": {
+                                        "max": 100,
+                                        "min": -100
+                                    }
+                                }
+                            ],
+                            "type": "collection",
+                            "label": "Token Probability"
+                        },
+                        "type": "array",
+                        "label": "Token Probability"
+                    },
+                    {
+                        "name": "seed",
+                        "type": "integer",
+                        "label": "Seed"
+                    },
+                    {
+                        "name": "tool_choice",
+                        "type": "select",
+                        "label": "Tool Choice",
+                        "validate": {
+                            "enum": [
+                                "none",
+                                "auto",
+                                "required"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "stop",
+                        "spec": {
+                            "name": "value",
+                            "type": "text",
+                            "label": "Stop Sequence"
+                        },
+                        "type": "array",
+                        "label": "Stop Sequences",
+                        "validate": {
+                            "maxItems": 4
+                        }
+                    },
+                    {
+                        "name": "additionalParameters",
+                        "spec": {
+                            "name": "value",
+                            "spec": [
+                                {
+                                    "name": "key",
+                                    "type": "text",
+                                    "label": "Parameter Name",
+                                    "required": true
+                                },
+                                {
+                                    "name": "type",
+                                    "type": "select",
+                                    "label": "Input Type",
+                                    "options": [
+                                        {
+                                            "label": "Text",
+                                            "value": "text",
+                                            "nested": [
+                                                {
+                                                    "name": "value",
+                                                    "type": "text",
+                                                    "label": "Parameter Value"
+                                                }
+                                            ],
+                                            "default": true
+                                        },
+                                        {
+                                            "label": "Number",
+                                            "value": "number",
+                                            "nested": [
+                                                {
+                                                    "name": "value",
+                                                    "type": "number",
+                                                    "label": "Parameter Value"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "label": "Boolean",
+                                            "value": "boolean",
+                                            "nested": [
+                                                {
+                                                    "name": "value",
+                                                    "type": "boolean",
+                                                    "label": "Parameter Value"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "label": "Date",
+                                            "value": "date",
+                                            "nested": [
+                                                {
+                                                    "name": "value",
+                                                    "type": "date",
+                                                    "label": "Parameter Value"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "label": "Any",
+                                            "value": "any",
+                                            "nested": [
+                                                {
+                                                    "name": "value",
+                                                    "type": "any",
+                                                    "label": "Parameter Value"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ],
+                            "type": "collection",
+                            "label": "Input Parameter"
+                        },
+                        "type": "array",
+                        "label": "Other Input Parameters"
+                    },
+                    {
+                        "name": "model",
+                        "type": "select",
+                        "label": "Model",
+                        "required": true
+                    },
+                    {
+                        "name": "max_tokens",
+                        "type": "uinteger",
+                        "label": "Max Completion Tokens"
+                    },
+                    {
+                        "name": "messages",
+                        "spec": {
+                            "name": "value",
+                            "spec": [
+                                {
+                                    "name": "role",
+                                    "type": "select",
+                                    "label": "Role",
+                                    "options": {
+                                        "store": [
+                                            {
+                                                "label": "User",
+                                                "value": "user",
+                                                "nested": [
+                                                    {
+                                                        "help": "Text content of the message on behalf of the selected __Role__.",
+                                                        "name": "content",
+                                                        "type": "text",
+                                                        "label": "Text Content"
+                                                    },
+                                                    {
+                                                        "name": "imageInputType",
+                                                        "type": "select",
+                                                        "label": "Image Input Type",
+                                                        "options": [
+                                                            {
+                                                                "label": "URL",
+                                                                "value": "url",
+                                                                "nested": [
+                                                                    {
+                                                                        "help": "Make sure to use a publicly accessible URL.\nYou can test if your image is publicly accessible by opening the link in an incognito tab.",
+                                                                        "name": "imageUrl",
+                                                                        "type": "url",
+                                                                        "label": "Image URL"
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "label": "Image File",
+                                                                "value": "file",
+                                                                "nested": [
+                                                                    {
+                                                                        "name": "imageFile",
+                                                                        "spec": [
+                                                                            {
+                                                                                "help": "Accepted extensions: `.jpg`, `.jpeg`, `.png`, `.webp` and `.gif`.",
+                                                                                "name": "imageFilename",
+                                                                                "type": "filename",
+                                                                                "label": "Image Filename",
+                                                                                "semantic": "file:name",
+                                                                                "extension": [
+                                                                                    "jpg",
+                                                                                    "jpeg",
+                                                                                    "png",
+                                                                                    "webp",
+                                                                                    "gif"
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "name": "imageData",
+                                                                                "type": "buffer",
+                                                                                "label": "Image Data",
+                                                                                "semantic": "file:data"
+                                                                            }
+                                                                        ],
+                                                                        "type": "collection",
+                                                                        "label": "Image"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ],
+                                                        "mappable": false
+                                                    },
+                                                    {
+                                                        "help": "Recommended value: `Auto`",
+                                                        "name": "imageDetail",
+                                                        "type": "select",
+                                                        "label": "Image Detail",
+                                                        "options": [
+                                                            {
+                                                                "label": "Auto",
+                                                                "value": "auto",
+                                                                "default": true
+                                                            },
+                                                            {
+                                                                "label": "High",
+                                                                "value": "high"
+                                                            },
+                                                            {
+                                                                "label": "Low",
+                                                                "value": "low"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "label": "Assistant",
+                                                "value": "assistant",
+                                                "nested": [
+                                                    {
+                                                        "help": "Text content of the message on behalf of the selected __Role__.",
+                                                        "name": "content",
+                                                        "type": "text",
+                                                        "label": "Text Content"
+                                                    },
+                                                    {
+                                                        "mode": "edit",
+                                                        "name": "tool_calls",
+                                                        "spec": {
+                                                            "spec": [
+                                                                {
+                                                                    "name": "type",
+                                                                    "type": "hidden",
+                                                                    "default": "function"
+                                                                },
+                                                                {
+                                                                    "help": "Map this directly from the output of a previous **Create a Completion** module. Look for `Choices[]: Message.Tool Calls[]: ID`.",
+                                                                    "name": "id",
+                                                                    "type": "text",
+                                                                    "label": "Tool call ID"
+                                                                },
+                                                                {
+                                                                    "name": "function",
+                                                                    "spec": [
+                                                                        {
+                                                                            "help": "The name of the function previously called.",
+                                                                            "name": "name",
+                                                                            "type": "text",
+                                                                            "label": "Name",
+                                                                            "required": true
+                                                                        },
+                                                                        {
+                                                                            "help": "The arguments previously output by the AI.",
+                                                                            "name": "arguments",
+                                                                            "type": "text",
+                                                                            "label": "Arguments",
+                                                                            "required": true
+                                                                        }
+                                                                    ],
+                                                                    "type": "collection",
+                                                                    "label": "Function"
+                                                                }
+                                                            ],
+                                                            "type": "collection",
+                                                            "label": "Tool Call"
+                                                        },
+                                                        "type": "array",
+                                                        "label": "Tool Calls",
+                                                        "labels": {
+                                                            "add": "Add tool call"
+                                                        },
+                                                        "mappable": {
+                                                            "help": "You can map the entire `Choices[]: Message.Tool Calls` array from a previous Create a Completion module here."
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "label": "Developer / System",
+                                                "value": "system",
+                                                "nested": [
+                                                    {
+                                                        "help": "Text content of the message on behalf of the selected __Role__.",
+                                                        "name": "content",
+                                                        "type": "text",
+                                                        "label": "Text Content"
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "label": "Tool",
+                                                "value": "tool",
+                                                "nested": [
+                                                    {
+                                                        "help": "The return of the function. This role should only be used when you have processed a previous function call and want to send the output of the function execution back to the AI.",
+                                                        "name": "content",
+                                                        "type": "text",
+                                                        "label": "Text Content",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "help": "Map this directly from the output of a previous **Create a Completion** module. Look for `Choices[]: Message.Tool Calls[]: ID`.",
+                                                        "name": "tool_call_id",
+                                                        "type": "text",
+                                                        "label": "Tool Call ID.",
+                                                        "required": true
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    "required": true
+                                }
+                            ],
+                            "type": "collection",
+                            "label": "Message"
+                        },
+                        "type": "array",
+                        "label": "Messages",
+                        "required": true
+                    },
+                    {
+                        "name": "response_format",
+                        "type": "select",
+                        "label": "Response Format",
+                        "validate": {
+                            "enum": [
+                                "text",
+                                "json_object"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "prediction",
+                        "type": "text",
+                        "label": "Predicted Outputs"
+                    },
+                    {
+                        "name": "parseJSONResponse",
+                        "type": "boolean",
+                        "label": "Parse JSON Response",
+                        "required": true
+                    }
+                ],
+                "interface": [
+                    {
+                        "name": "result",
+                        "type": "any",
+                        "label": "Result"
+                    },
+                    {
+                        "name": "id",
+                        "type": "text",
+                        "label": "ID"
+                    },
+                    {
+                        "name": "object",
+                        "type": "text",
+                        "label": "Object"
+                    },
+                    {
+                        "name": "created",
+                        "type": "date",
+                        "label": "Created"
+                    },
+                    {
+                        "name": "model",
+                        "type": "text",
+                        "label": "Model"
+                    },
+                    {
+                        "name": "choices",
+                        "spec": [
+                            {
+                                "name": "text",
+                                "type": "text",
+                                "label": "Text"
+                            },
+                            {
+                                "name": "index",
+                                "type": "number",
+                                "label": "Index"
+                            },
+                            {
+                                "name": "logprobs",
+                                "type": "text",
+                                "label": "Log Probs"
+                            },
+                            {
+                                "name": "finish_reason",
+                                "type": "text",
+                                "label": "Finish Reason"
+                            },
+                            {
+                                "name": "message",
+                                "spec": [
+                                    {
+                                        "name": "role",
+                                        "type": "text",
+                                        "label": "Role"
+                                    },
+                                    {
+                                        "name": "content",
+                                        "type": "text",
+                                        "label": "Content"
+                                    },
+                                    {
+                                        "name": "tool_calls",
+                                        "spec": [
+                                            {
+                                                "name": "id",
+                                                "type": "text",
+                                                "label": "ID"
+                                            },
+                                            {
+                                                "name": "type",
+                                                "type": "text",
+                                                "label": "Type"
+                                            },
+                                            {
+                                                "name": "function",
+                                                "spec": [
+                                                    {
+                                                        "name": "name",
+                                                        "type": "text",
+                                                        "label": "Name"
+                                                    },
+                                                    {
+                                                        "name": "arguments",
+                                                        "type": "text",
+                                                        "label": "Arguments"
+                                                    }
+                                                ],
+                                                "type": "collection",
+                                                "label": "Function"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Tool Calls"
+                                    },
+                                    {
+                                        "name": "refusal",
+                                        "type": "text",
+                                        "label": "Refusal"
+                                    },
+                                    {
+                                        "name": "annotations",
+                                        "spec": [
+                                            {
+                                                "name": "type",
+                                                "type": "text",
+                                                "label": "Type"
+                                            },
+                                            {
+                                                "name": "url_citation",
+                                                "spec": [
+                                                    {
+                                                        "name": "end_index",
+                                                        "type": "number",
+                                                        "label": "End Index"
+                                                    },
+                                                    {
+                                                        "name": "start_index",
+                                                        "type": "number",
+                                                        "label": "Start Index"
+                                                    },
+                                                    {
+                                                        "name": "title",
+                                                        "type": "text",
+                                                        "label": "Title"
+                                                    },
+                                                    {
+                                                        "name": "url",
+                                                        "type": "text",
+                                                        "label": "URL"
+                                                    }
+                                                ],
+                                                "type": "collection",
+                                                "label": "URL Citation"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Annotations"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "Message"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Choices"
+                    },
+                    {
+                        "name": "usage",
+                        "spec": [
+                            {
+                                "name": "prompt_tokens",
+                                "type": "number",
+                                "label": "Prompt Tokens"
+                            },
+                            {
+                                "name": "completion_tokens",
+                                "type": "text",
+                                "label": "Completion Tokens"
+                            },
+                            {
+                                "name": "total_tokens",
+                                "type": "number",
+                                "label": "Total Tokens"
+                            },
+                            {
+                                "name": "prompt_tokens_details",
+                                "spec": [
+                                    {
+                                        "name": "cached_tokens",
+                                        "type": "uinteger",
+                                        "label": "Cached Tokens"
+                                    },
+                                    {
+                                        "name": "text_tokens",
+                                        "type": "uinteger",
+                                        "label": "Text Tokens"
+                                    },
+                                    {
+                                        "name": "image_tokens",
+                                        "type": "uinteger",
+                                        "label": "Image Tokens"
+                                    },
+                                    {
+                                        "name": "audio_tokens",
+                                        "type": "uinteger",
+                                        "label": "Audio Tokens"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "Prompt Tokens Details"
+                            },
+                            {
+                                "name": "completion_tokens_details",
+                                "spec": [
+                                    {
+                                        "name": "reasoning_tokens",
+                                        "type": "uinteger",
+                                        "label": "Reasoning Tokens"
+                                    },
+                                    {
+                                        "name": "text_tokens",
+                                        "type": "uinteger",
+                                        "label": "Text Tokens"
+                                    },
+                                    {
+                                        "name": "audio_tokens",
+                                        "type": "uinteger",
+                                        "label": "Audio Tokens"
+                                    },
+                                    {
+                                        "name": "accepted_prediction_tokens",
+                                        "type": "uinteger",
+                                        "label": "Accepted Prediction Tokens"
+                                    },
+                                    {
+                                        "name": "rejected_prediction_tokens",
+                                        "type": "uinteger",
+                                        "label": "Rejected Prediction Tokens"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "Completion Tokens Details"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Usage"
+                    },
+                    {
+                        "name": "service_tier",
+                        "type": "text",
+                        "label": "Service Tier"
+                    },
+                    {
+                        "name": "system_fingerprint",
+                        "type": "text",
+                        "label": "System Fingerprint"
+                    }
+                ],
+                "advanced": true
+            }
         },
-        { "name": "resImgName", "type": "text", "label": "Response Image Name", "semantic": "file:name" },
-        { "name": "resImgData", "type": "buffer", "label": "Response Image Data", "semantic": "file:data" }
-      ]
-    },
-    {
-      "id": 8,
-      "module": "util:FunctionSleep",
-      "version": 1,
-      "parameters": {},
-      "mapper": { "duration": "10" },
-      "metadata": {
-        "designer": { "x": 1200, "y": 0 }
-      }
-    },
-    {
-      "id": 4,
-      "module": "linkedin:ShareImage",
-      "version": 2,
-      "parameters": {
-        "__IMTCONN__": "{{PLACEHOLDER_CONN_LINKEDIN}}"
-      },
-      "mapper": {
-        "data": "{{3.resImgData}}",
-        "content": "{{6.text}}",
-        "fileName": "{{3.resImgName}}",
-        "visibility": "PUBLIC",
-        "feedDistribution": "MAIN_FEED",
-        "isReshareDisabledByAuthor": false
-      },
-      "metadata": {
-        "designer": { "x": 1469, "y": -9 }
-      }
-    },
-    {
-      "id": 9,
-      "module": "util:FunctionSleep",
-      "version": 1,
-      "parameters": {},
-      "mapper": { "duration": "15" },
-      "metadata": {
-        "designer": { "x": 1769, "y": -9 }
-      }
+        {
+            "id": 7,
+            "module": "util:FunctionSleep",
+            "version": 1,
+            "parameters": {},
+            "mapper": {
+                "duration": "10"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 300,
+                    "y": 0
+                },
+                "restore": {},
+                "expect": [
+                    {
+                        "name": "duration",
+                        "type": "uinteger",
+                        "label": "Delay",
+                        "required": true,
+                        "validate": {
+                            "max": 300,
+                            "min": 1
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": 6,
+            "module": "regexp:Replace",
+            "version": 1,
+            "parameters": {},
+            "mapper": {
+                "text": "{{1.result.post}}",
+                "value": " ",
+                "global": true,
+                "pattern": "[**]",
+                "multiline": false,
+                "sensitive": true,
+                "singleline": false
+            },
+            "metadata": {
+                "designer": {
+                    "x": 600,
+                    "y": 0
+                },
+                "restore": {
+                    "expect": {
+                        "global": {
+                            "mode": "chose"
+                        },
+                        "multiline": {
+                            "mode": "chose"
+                        },
+                        "sensitive": {
+                            "mode": "chose"
+                        },
+                        "singleline": {
+                            "mode": "chose"
+                        }
+                    }
+                },
+                "expect": [
+                    {
+                        "name": "pattern",
+                        "type": "text",
+                        "label": "Pattern",
+                        "required": true
+                    },
+                    {
+                        "name": "value",
+                        "type": "text",
+                        "label": "New value"
+                    },
+                    {
+                        "name": "global",
+                        "type": "boolean",
+                        "label": "Global match",
+                        "required": true
+                    },
+                    {
+                        "name": "sensitive",
+                        "type": "boolean",
+                        "label": "Case sensitive",
+                        "required": true
+                    },
+                    {
+                        "name": "multiline",
+                        "type": "boolean",
+                        "label": "Multiline",
+                        "required": true
+                    },
+                    {
+                        "name": "singleline",
+                        "type": "boolean",
+                        "label": "Singleline",
+                        "required": true
+                    },
+                    {
+                        "name": "text",
+                        "type": "text",
+                        "label": "Text"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 3,
+            "module": "openai-gpt-3:GenerateImage",
+            "version": 1,
+            "parameters": {
+                "__IMTCONN__": 10073099
+            },
+            "mapper": {
+                "size": "1024x1024",
+                "model": "dall-e-3",
+                "style": "vivid",
+                "prompt": "{{1.result.image_prompt}}",
+                "quality": "standard",
+                "response_format": "imageFile"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 900,
+                    "y": 0,
+                    "name": "Génération de l'image"
+                },
+                "restore": {
+                    "expect": {
+                        "size": {
+                            "mode": "chose",
+                            "label": "1024x1024"
+                        },
+                        "model": {
+                            "mode": "chose",
+                            "label": "Dall-E 3"
+                        },
+                        "style": {
+                            "mode": "chose",
+                            "label": "Vivid"
+                        },
+                        "quality": {
+                            "mode": "chose",
+                            "label": "Standard"
+                        },
+                        "response_format": {
+                            "mode": "chose",
+                            "label": "Image File"
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "openai-gpt-3"
+                            },
+                            "label": "My OpenAI connection"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:openai-gpt-3",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "model",
+                        "type": "select",
+                        "label": "Model",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "gpt-image-1",
+                                "dall-e-3",
+                                "dall-e-2"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "prompt",
+                        "type": "text",
+                        "label": "Prompt",
+                        "required": true,
+                        "validate": {
+                            "max": 4000,
+                            "min": 0
+                        }
+                    },
+                    {
+                        "name": "size",
+                        "type": "select",
+                        "label": "Size",
+                        "validate": {
+                            "enum": [
+                                "1024x1024",
+                                "1792x1024",
+                                "1024x1792"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "quality",
+                        "type": "select",
+                        "label": "Quality",
+                        "validate": {
+                            "enum": [
+                                "standard",
+                                "hd"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "style",
+                        "type": "select",
+                        "label": "Style",
+                        "validate": {
+                            "enum": [
+                                "vivid",
+                                "natural"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "response_format",
+                        "type": "select",
+                        "label": "Response Format",
+                        "validate": {
+                            "enum": [
+                                "url",
+                                "imageFile"
+                            ]
+                        }
+                    }
+                ],
+                "interface": [
+                    {
+                        "name": "created",
+                        "type": "date",
+                        "label": "Created"
+                    },
+                    {
+                        "name": "data",
+                        "spec": [
+                            {
+                                "name": "fileName",
+                                "type": "text",
+                                "label": "File Name",
+                                "semantic": "file:name"
+                            },
+                            {
+                                "name": "fileData",
+                                "type": "buffer",
+                                "label": "File Data",
+                                "semantic": "file:data"
+                            },
+                            {
+                                "name": "revised_prompt",
+                                "type": "text",
+                                "label": "Revised Prompt"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Data"
+                    },
+                    {
+                        "name": "resImgName",
+                        "type": "text",
+                        "label": "Response Image Name",
+                        "semantic": "file:name"
+                    },
+                    {
+                        "name": "resImgData",
+                        "type": "buffer",
+                        "label": "Response Image Data",
+                        "semantic": "file:data"
+                    }
+                ],
+                "advanced": true
+            }
+        },
+        {
+            "id": 8,
+            "module": "util:FunctionSleep",
+            "version": 1,
+            "parameters": {},
+            "mapper": {
+                "duration": "10"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 1200,
+                    "y": 0
+                },
+                "restore": {},
+                "expect": [
+                    {
+                        "name": "duration",
+                        "type": "uinteger",
+                        "label": "Delay",
+                        "required": true,
+                        "validate": {
+                            "max": 300,
+                            "min": 1
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": 4,
+            "module": "linkedin:ShareImage",
+            "version": 2,
+            "parameters": {
+                "__IMTCONN__": 10073176
+            },
+            "mapper": {
+                "data": "{{3.resImgData}}",
+                "content": "{{6.text}}",
+                "fileName": "{{3.resImgName}}",
+                "visibility": "PUBLIC",
+                "feedDistribution": "MAIN_FEED",
+                "isReshareDisabledByAuthor": false
+            },
+            "metadata": {
+                "designer": {
+                    "x": 1500,
+                    "y": 0
+                },
+                "restore": {
+                    "expect": {
+                        "visibility": {
+                            "mode": "chose",
+                            "label": "Public"
+                        },
+                        "feedDistribution": {
+                            "mode": "chose",
+                            "label": "Main feed"
+                        },
+                        "isReshareDisabledByAuthor": {
+                            "mode": "chose"
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "linkedin2"
+                            },
+                            "label": "My LinkedIn connection (Romain Taugourdeau)"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:linkedin2,linkedin-openid",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "fileName",
+                        "type": "text",
+                        "label": "File name",
+                        "required": true
+                    },
+                    {
+                        "name": "data",
+                        "type": "buffer",
+                        "label": "Data",
+                        "required": true
+                    },
+                    {
+                        "name": "title",
+                        "type": "text",
+                        "label": "Title"
+                    },
+                    {
+                        "name": "altText",
+                        "type": "text",
+                        "label": "Alt Text"
+                    },
+                    {
+                        "name": "content",
+                        "type": "text",
+                        "label": "Content",
+                        "required": true
+                    },
+                    {
+                        "name": "visibility",
+                        "type": "select",
+                        "label": "Visibility",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "PUBLIC",
+                                "CONNECTIONS",
+                                "LOGGED_IN"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "feedDistribution",
+                        "type": "select",
+                        "label": "Feed Distribution",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "MAIN_FEED",
+                                "NONE"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "isReshareDisabledByAuthor",
+                        "type": "boolean",
+                        "label": "Is Reshare Disabled",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        {
+            "id": 9,
+            "module": "util:FunctionSleep",
+            "version": 1,
+            "parameters": {},
+            "mapper": {
+                "duration": "15"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 1800,
+                    "y": 0
+                },
+                "restore": {},
+                "expect": [
+                    {
+                        "name": "duration",
+                        "type": "uinteger",
+                        "label": "Delay",
+                        "required": true,
+                        "validate": {
+                            "max": 300,
+                            "min": 1
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    "metadata": {
+        "instant": false,
+        "version": 1,
+        "scenario": {
+            "roundtrips": 1,
+            "maxErrors": 3,
+            "autoCommit": true,
+            "autoCommitTriggerLast": true,
+            "sequential": false,
+            "slots": null,
+            "confidential": false,
+            "dataloss": false,
+            "dlq": false,
+            "freshVariables": false
+        },
+        "designer": {
+            "orphans": []
+        },
+        "zone": "eu2.make.com",
+        "notes": []
     }
-  ],
-  "metadata": {
-    "instant": false,
-    "version": 1,
-    "scenario": {
-      "roundtrips": 1,
-      "maxErrors": 3,
-      "autoCommit": true,
-      "autoCommitTriggerLast": true,
-      "sequential": false,
-      "slots": null,
-      "confidential": false,
-      "dataloss": false,
-      "dlq": false,
-      "freshVariables": false
-    },
-    "designer": { "orphans": [] },
-    "zone": "eu2.make.com",
-    "notes": []
-  }
 }
