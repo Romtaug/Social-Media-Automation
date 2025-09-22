@@ -1,0 +1,15 @@
+👉 Va sur console.cloud.google.com → crée un projet (ou choisis-en un)
+
+📚 APIs & Services → Library → cherche YouTube Data API v3 → clique Enable
+
+🛡️ APIs & Services → OAuth consent screen
+🔹 Type : External (le plus simple)
+🔹 App name, email, domaine (facultatif), logo (facultatif)
+🔹 Scopes à ajouter :
+  🔑 https://www.googleapis.com/auth/youtube.force-ssl → lecture/écriture des commentaires
+  📤 https://www.googleapis.com/auth/youtube.upload → upload vidéo
+🔹 Test users : ajoute ton email YouTube si l’app reste en mode Test
+
+🪪 Credentials → Create Credentials → OAuth client ID
+⚙️ Choisis Desktop App (tests Postman/CLI) ou Web (si backend)
+✍️ Note le Client ID et le Client Secret (mais si tu passes par Make, pas besoin → il gère l’OAuth automatiquement)
