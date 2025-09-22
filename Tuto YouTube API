@@ -13,3 +13,26 @@
 🪪 Credentials → Create Credentials → OAuth client ID
 ⚙️ Choisis Desktop App (tests Postman/CLI) ou Web (si backend)
 ✍️ Note le Client ID et le Client Secret (mais si tu passes par Make, pas besoin → il gère l’OAuth automatiquement)
+
+---
+
+📊 Quotas YouTube Data API v3
+
+🎯 Quota total par défaut gratuit : 10 000 unités par jour (renouvelé toutes les 24h UTC)
+
+⚡ Consommation des principales opérations
+
+🔍 Rechercher des vidéos (search.list) → 100 unités par appel
+📺 Lister vidéos d’une chaîne (playlistItems.list) → 1 unité
+📄 Récupérer détails vidéo (videos.list) → 1 unité
+💬 Lire commentaires (commentThreads.list) → 1 unité
+✍️ Poster un commentaire (commentThreads.insert) → 50 unités
+↩️ Répondre à un commentaire (comments.insert) → 50 unités
+📤 Uploader une vidéo (videos.insert) → 1600 unités (donc tu peux uploader environ 6 vidéos par jour avec le quota par défaut)
+📝 Mettre à jour une vidéo (videos.update) → 50 unités
+
+🚀 Concrètement, avec 10 000 unités/jour tu peux :
+Publier jusqu’à 6 vidéos/jour (≈9600 unités si tu fais que ça)
+OU poster 200 commentaires/jour (50 unités × 200 = 10 000)
+OU faire 10 000 requêtes légères (list vidéos, list comments, etc. = 1 unité chacune)
+OU combiner : ex. 3 vidéos uploadées + 40 commentaires + 100 lectures de vidéos
